@@ -129,4 +129,6 @@ public class LocalPoint
 	{
 		return y >>> Perspective.LOCAL_COORD_BITS;
 	}
+
+	public void printXY(){System.out.println("(" + x + "," + y + ")");}
 }

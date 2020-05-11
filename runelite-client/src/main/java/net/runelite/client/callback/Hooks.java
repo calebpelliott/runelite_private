@@ -66,6 +66,7 @@ import net.runelite.client.eventbus.EventBus;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.input.KeyManager;
 import net.runelite.client.input.MouseManager;
+import net.runelite.client.plugins.aaa.aaa;
 import net.runelite.client.task.Scheduler;
 import net.runelite.client.ui.ClientUI;
 import net.runelite.client.ui.DrawManager;
@@ -255,6 +256,9 @@ public class Hooks implements Callbacks
 	@Override
 	public MouseEvent mousePressed(MouseEvent mouseEvent)
 	{
+		System.out.println("Mouse pressed: (" + mouseEvent.getX() + "," + mouseEvent.getY() + ")\n"
+				+ "abs: (" + mouseEvent.getXOnScreen() + "," + mouseEvent.getYOnScreen() + ")");
+		aaa.ml = this;
 		return mouseManager.processMousePressed(mouseEvent);
 	}
 
