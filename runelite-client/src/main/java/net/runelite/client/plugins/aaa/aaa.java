@@ -48,9 +48,11 @@ public class aaa extends Plugin {
 
         final Point canvasOffset = clientUi.getCanvasOffset();
 
-        Point framLocation = clientUi.getFrameLocation();
+        Point frameLocation = clientUi.getAbsoluteFrameLocation();
+
+        Point canvasLocation = clientUi.getAbsoluteCanvasLocation();
 
         Bot b = new Bot();
-        b.botTick(client);
+        b.botTick(client, canvasLocation);
     }
 }

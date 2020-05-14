@@ -110,6 +110,8 @@ public class ClientUI
 	private static final int CLIENT_WELL_HIDDEN_MARGIN = 160;
 	private static final int CLIENT_WELL_HIDDEN_MARGIN_TOP = 10;
 	public static final BufferedImage ICON = ImageUtil.getResourceStreamFromClass(ClientUI.class, "/runelite.png");
+	private static final int CLIENT_VERTICAL_BAR_WIDTH = 4;
+	private static final int CLIENT_HORIZONTAL_BAR_WIDTH = 27;
 
 	@Getter
 	private TrayIcon trayIcon;
@@ -485,11 +487,22 @@ public class ClientUI
 	 *
 	 * @return Point representing to top left point of the client on the screen
 	 */
-	public Point getFrameLocation()
+	public Point getAbsoluteFrameLocation()
 	{
 		java.awt.Point javaPoint = frame.getLocationOnScreen();
 
+		final Client client = (Client) this.client;
+
+		Point canvasAbsPos = new Point(javaPoint.x + client.getViewportXOffset(), javaPoint.y + client.getViewportYOffset());
+
 		return new Point(javaPoint.x, javaPoint.y);
+	}
+
+	public Point getAbsoluteCanvasLocation()
+	{
+		Point frame = getAbsoluteFrameLocation();
+
+		return new Point(frame.getX() + CLIENT_VERTICAL_BAR_WIDTH, frame.getY() + CLIENT_HORIZONTAL_BAR_WIDTH);
 	}
 	public void show()
 	{

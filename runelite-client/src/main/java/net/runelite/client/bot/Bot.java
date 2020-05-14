@@ -24,10 +24,13 @@ public class Bot {
 
     private Client client;
 
+    private Point canvasLocation;
+
     static private int triggered = 0;
 
-    public void botTick(Client clientRef){
+    public void botTick(Client clientRef, Point canvasLocation){
         client = clientRef;
+        this.canvasLocation = canvasLocation;
 
         //update scene objects
         updateSelfScene();
@@ -81,6 +84,7 @@ public class Bot {
                                 Shape s = Perspective.getClickbox(client, m, client.getCameraYaw(), localPoint);
                                 Point pp = Perspective.localToCanvas(client, localPoint, client.getPlane());
 
+                                Point locationOfItem = findDesktopPoint(pp);
                                 int l,k,j,h;
                                 l = client.getViewportXOffset();
                                 Canvas canvas = client.getCanvas();
@@ -93,7 +97,10 @@ public class Bot {
                             if(item.getId() == 1265 && triggered == 0)
                             {
                                 int xPos = 0, yPos = 0;
-                                robot.mouseMove(xPos, yPos);
+                                LocalPoint localPoint = itemLayer.getLocalLocation();
+                                Point p = findDesktopPoint(Perspective.localToCanvas(client, localPoint, client.getPlane()));
+
+                                robot.mouseMove(p.getX(), p.getY());
                                 triggered = 1;
                             }
                             current = current.getNext();
@@ -105,6 +112,21 @@ public class Bot {
 
     }
 
+    private Point findDesktopPoint(Point perspectivePoint)
+    {
+        Dimension stretchedDimensions = client.getStretchedDimensions();
+        Dimension realDimensions = client.getRealDimensions();
+
+        int oldX = (int) (perspectivePoint.getX() * (stretchedDimensions.width / realDimensions.getWidth()));
+        int oldY = (int) (perspectivePoint.getY() * (stretchedDimensions.height / realDimensions.getHeight()));
+
+        return new Point(oldX + canvasLocation.getX(), oldY + canvasLocation.getY());
+    }
+
+    private void moveMouseRelative(Point relativePoint)
+    {
+
+    }
     private void updateSelfScene() {
         Scene scene = client.getScene();
         Tile[][][] tiles = scene.getTiles();
