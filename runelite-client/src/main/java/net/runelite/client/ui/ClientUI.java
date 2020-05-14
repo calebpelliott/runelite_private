@@ -481,6 +481,16 @@ public class ClientUI
 		});
 	}
 
+	/**
+	 *
+	 * @return Point representing to top left point of the client on the screen
+	 */
+	public Point getFrameLocation()
+	{
+		java.awt.Point javaPoint = frame.getLocationOnScreen();
+
+		return new Point(javaPoint.x, javaPoint.y);
+	}
 	public void show()
 	{
 		SwingUtilities.invokeLater(() ->

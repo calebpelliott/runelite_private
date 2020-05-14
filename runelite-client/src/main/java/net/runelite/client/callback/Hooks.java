@@ -25,13 +25,8 @@
 package net.runelite.client.callback;
 
 import com.google.inject.Injector;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.Image;
-import java.awt.RenderingHints;
+
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -258,6 +253,8 @@ public class Hooks implements Callbacks
 	{
 		System.out.println("Mouse pressed: (" + mouseEvent.getX() + "," + mouseEvent.getY() + ")\n"
 				+ "abs: (" + mouseEvent.getXOnScreen() + "," + mouseEvent.getYOnScreen() + ")");
+		Point p = mouseEvent.getPoint();
+		Point p2 = mouseEvent.getLocationOnScreen();
 		aaa.ml = this;
 		return mouseManager.processMousePressed(mouseEvent);
 	}
