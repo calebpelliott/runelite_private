@@ -7,10 +7,12 @@ import net.runelite.api.coords.LocalPoint;
 import net.runelite.client.ui.overlay.OverlayUtil;
 import net.runelite.api.ItemID;
 import java.awt.Robot;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.inject.Inject;
 
 import java.awt.*;
+import java.awt.event.InputEvent;
 
 import static net.runelite.api.ItemID.*;
 
@@ -100,7 +102,10 @@ public class Bot {
                                 LocalPoint localPoint = itemLayer.getLocalLocation();
                                 Point p = findDesktopPoint(Perspective.localToCanvas(client, localPoint, client.getPlane()));
 
-                                robot.mouseMove(p.getX(), p.getY());
+                                java.awt.Point start = MouseInfo.getPointerInfo().getLocation();
+                                Click c = new Click(start.x, start.y, p.getX(), p.getY());
+                                c.start();
+
                                 triggered = 1;
                             }
                             current = current.getNext();
