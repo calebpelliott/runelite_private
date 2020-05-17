@@ -16,10 +16,6 @@ public class Inventory {
         List<WidgetItem> list = new ArrayList<WidgetItem>();
 
         Widget inventoryWidget = Bot.client.getWidget(WidgetInfo.INVENTORY);
-        if (inventoryWidget == null || inventoryWidget.isHidden())
-        {
-            return list;
-        }
 
         for (WidgetItem item : inventoryWidget.getWidgetItems())
         {
@@ -34,10 +30,6 @@ public class Inventory {
         List<WidgetItem> list = new ArrayList<WidgetItem>();
 
         Widget inventoryWidget = Bot.client.getWidget(WidgetInfo.INVENTORY);
-        if (inventoryWidget == null || inventoryWidget.isHidden())
-        {
-            return list;
-        }
 
         for (WidgetItem item : inventoryWidget.getWidgetItems())
         {

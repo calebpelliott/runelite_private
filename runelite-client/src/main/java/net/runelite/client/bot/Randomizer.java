@@ -14,7 +14,7 @@ public class Randomizer {
     static public Point randomPointFromRectangle(Rectangle rectangle)
     {
         int randX = ThreadLocalRandom.current().nextInt(rectangle.x, rectangle.x + rectangle.width);
-        int randY = ThreadLocalRandom.current().nextInt(rectangle.y - rectangle.height, rectangle.y);
+        int randY = ThreadLocalRandom.current().nextInt(rectangle.y, rectangle.y + rectangle.height);
 
         return new Point(randX, randY);
     }

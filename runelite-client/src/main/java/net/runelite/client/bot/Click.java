@@ -27,13 +27,13 @@ public class Click{
         this.endY = endY;
     }
 
-    public static void clickPointFromCurrent(Point p)
+    public static void clickPointFromCurrent(Point end)
     {
         java.awt.Point start = MouseInfo.getPointerInfo().getLocation();
         Point begin = new Point(start.x, start.y);
 
-        begin = translateToAbsolutePoint(begin);
-        moveMouse(begin, p);
+        end = translateToAbsolutePoint(end);
+        moveMouse(begin, end);
 
         Randomizer.randomWait(Randomizer.WaitEvent.POST_MOUSE_MOVE);
 
