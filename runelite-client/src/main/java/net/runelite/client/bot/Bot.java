@@ -24,9 +24,10 @@ public class Bot {
 
     private Scene selfScene;
 
-    private Client client;
+    public static Client client;
 
-    private Point canvasLocation;
+    //Absolute (x,y) of top left client
+    public static Point canvasLocation;
 
     static private int triggered = 0;
 
@@ -105,8 +106,11 @@ public class Bot {
                                 java.awt.Point start = MouseInfo.getPointerInfo().getLocation();
 
                                 System.out.println("Item found at: " + p.getX() + "," + p.getY());
-                                Click c = new Click(start.x, start.y, p.getX(), p.getY());
-                                c.start();
+                                //Click c = new Click(start.x, start.y, p.getX(), p.getY());
+                                //c.start();
+
+                                ParallelProcess processor = new ParallelProcess();
+                                processor.start();
 
                                 triggered = 1;
                             }
