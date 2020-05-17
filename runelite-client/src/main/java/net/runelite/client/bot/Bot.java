@@ -103,6 +103,8 @@ public class Bot {
                                 Point p = findDesktopPoint(Perspective.localToCanvas(client, localPoint, client.getPlane()));
 
                                 java.awt.Point start = MouseInfo.getPointerInfo().getLocation();
+
+                                System.out.println("Item found at: " + p.getX() + "," + p.getY());
                                 Click c = new Click(start.x, start.y, p.getX(), p.getY());
                                 c.start();
 
