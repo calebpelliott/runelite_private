@@ -64,7 +64,9 @@ def mouse_bez(init_pos, fin_pos, deviation, speed):
     bezier = make_bezier(xys)
     points = bezier(ts)
 
-    points = points[:-9]
+    if speed != 1:
+        points = points[:-(speed-1)]
+
     return points
 
 def make_bezier(xys):
@@ -163,5 +165,5 @@ y2 = int(sys.argv[4])
 points = [(x1,y1),
           (x2,y2)]
 
-path = connected_bez(points, 10, 10)
+path = connected_bez(points, 25, 1)
 move(path)
