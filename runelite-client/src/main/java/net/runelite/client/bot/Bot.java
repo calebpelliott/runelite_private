@@ -4,15 +4,22 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.Point;
 import net.runelite.api.coords.LocalPoint;
+import net.runelite.api.widgets.Widget;
+import net.runelite.api.widgets.WidgetInfo;
+import net.runelite.api.widgets.WidgetItem;
 import net.runelite.client.ui.overlay.OverlayUtil;
 import net.runelite.api.ItemID;
 import java.awt.Robot;
+import java.awt.geom.PathIterator;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.inject.Inject;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static net.runelite.api.ItemID.*;
 
@@ -29,21 +36,58 @@ public class Bot {
     //Absolute (x,y) of top left client
     public static Point canvasLocation;
 
-    static private int triggered = 0;
+    static public int triggered = 0;
+
+    public static ReentrantLock active = new ReentrantLock();
 
     public void botTick(Client clientRef, Point canvasLocation){
         client = clientRef;
         this.canvasLocation = canvasLocation;
 
+
+
         //update scene objects
         updateSelfScene();
 
+        test();
+
         //perform actions based on current scene
-        try {
-            pickUpItem(BRONZE_AXE);
-        } catch (AWTException e) {
-            e.printStackTrace();
+        if(triggered == 1 && !active.isLocked())
+        {
+            System.out.println("Beginning new process!");
+            active.lock();
+            ParallelProcess processor = new ParallelProcess();
+            processor.start();
         }
+    }
+
+    void test(){
+        List<WidgetItem> list = Inventory.getInventory();
+        Widget widget = Bot.client.getWidget(WidgetInfo.BANK_CONTAINER);
+        GameObjectIterpolate.getBankShape();
+        /*Widget widget = Bot.client.getWidget(WidgetInfo.GRAND_EXCHANGE_WINDOW_CONTAINER);
+        Rectangle rectangle = widget.getBounds();
+        Point p = widget.getCanvasLocation();
+        p = Click.translateToAbsolutePoint(p);
+
+        widget = Bot.client.getWidget(WidgetInfo.GRAND_EXCHANGE_INVENTORY_ITEMS_CONTAINER);
+        p = widget.getCanvasLocation();
+        p = Click.translateToAbsolutePoint(p);
+
+        widget = Bot.client.getWidget(WidgetInfo.GRAND_EXCHANGE_OFFER_CONTAINER);
+        p = widget.getCanvasLocation();
+        p = Click.translateToAbsolutePoint(p);
+
+        widget = Bot.client.getWidget(WidgetInfo.GRAND_EXCHANGE_OFFER_TEXT);
+        p = widget.getCanvasLocation();
+        p = Click.translateToAbsolutePoint(p);
+
+        widget = Bot.client.getWidget(WidgetInfo.GRAND_EXCHANGE_OFFER_PRICE);
+        p = widget.getCanvasLocation();
+        p = Click.translateToAbsolutePoint(p);*/
+
+        NPC.getNpcTileRectangle();
+
     }
 
     private void pickUpItem(int pickupItemID) throws AWTException {
@@ -152,7 +196,36 @@ public class Bot {
                     continue;
                 }
 
-                Player player = client.getLocalPlayer();
+                if((x == 51) && (y == 51))
+                {
+                    GameObject[] gameObjects = tile.getGameObjects();
+                    if (gameObjects != null) {
+                        for (GameObject gameObject : gameObjects) {
+                            if (gameObject != null) {
+                                Shape s = gameObject.getConvexHull();
+                                PathIterator pi = s.getPathIterator(null);
+
+                                //get point with greatest x and point with greatest y
+                                Point top = new Point(-1, -1);
+                                Point bot = new Point(-1, -1);
+                                for(;!pi.isDone(); pi.next())
+                                {
+                                    double[] coords = new double[2];
+                                    pi.currentSegment(coords);
+
+                                    if(coords[0] > top.getX())
+                                    {
+                                        top = new Point((int)coords[0], (int)coords[1]);
+                                    }
+                                    if(coords[1] > bot.getY())
+                                    {
+                                        bot = new Point((int)coords[0], (int)coords[1]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

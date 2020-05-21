@@ -5,6 +5,6 @@ import net.runelite.api.ItemID;
 public class ParallelProcess extends Thread{
 
     public void run() {
-        Processor.useItemOnItemWait(ItemID.KNIFE, ItemID.CHOCOLATE_BAR);
+        Processor.mixPotions();
     }
 }

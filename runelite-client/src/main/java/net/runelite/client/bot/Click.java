@@ -2,6 +2,7 @@ package net.runelite.client.bot;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,6 +28,14 @@ public class Click{
         this.endY = endY;
     }
 
+    public static void clickButton(int key)
+    {
+        robot.keyPress(key);
+        Randomizer.randomWait(Randomizer.WaitEvent.SHORT_CLICK);
+        robot.keyRelease(key);
+        Randomizer.randomWait(Randomizer.WaitEvent.SHORT_CLICK);
+    }
+
     public static void clickPointFromCurrent(Point end)
     {
         java.awt.Point start = MouseInfo.getPointerInfo().getLocation();
@@ -45,9 +54,10 @@ public class Click{
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
         Randomizer.randomWait(Randomizer.WaitEvent.SHORT_CLICK);
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        Randomizer.randomWait(Randomizer.WaitEvent.SHORT_CLICK);
     }
 
-    private static Point translateToAbsolutePoint(Point p)
+    public static Point translateToAbsolutePoint(Point p)
     {
         Dimension stretchedDimensions = Bot.client.getStretchedDimensions();
         Dimension realDimensions = Bot.client.getRealDimensions();

@@ -2,9 +2,11 @@ package net.runelite.client.plugins.aaa;
 
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
+import net.runelite.api.MenuEntry;
 import net.runelite.api.Point;
 import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.api.events.MenuOpened;
 import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.GameTick;
 import net.runelite.client.bot.Bot;
@@ -37,6 +39,20 @@ public class aaa extends Plugin {
     public void onStatChanged(StatChanged statChanged)
     {
         System.out.println("yo");
+    }
+
+    @Subscribe
+    public void onMenuOpened(MenuOpened event)
+    {
+        MenuEntry[] menuEntries = client.getMenuEntries();
+
+        for (int i = 0; i < menuEntries.length; i++)
+        {
+            MenuEntry entry = menuEntries[i];
+            int ads = 42;
+        }
+
+        Bot.triggered = 1;
     }
 
     @Subscribe

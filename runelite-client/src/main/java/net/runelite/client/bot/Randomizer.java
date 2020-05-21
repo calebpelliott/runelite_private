@@ -47,4 +47,44 @@ public class Randomizer {
 
         System.out.println("Initialized wait time dictionary");
     }
+
+    public static Polygon reducePolygonSize(Polygon p)
+    {
+        p.xpoints[0] = p.xpoints[0] + 10;
+        p.ypoints[0] = p.ypoints[0] + 10;
+
+        p.xpoints[1] = p.xpoints[1] + 10;
+        p.ypoints[1] = p.ypoints[1] - 10;
+
+        p.xpoints[2] = p.xpoints[2] - 10;
+        p.ypoints[2] = p.ypoints[2] - 10;
+
+        p.xpoints[3] = p.xpoints[3] - 10;
+        p.ypoints[3] = p.ypoints[3] + 10;
+
+        return p;
+    }
+
+    public static Rectangle reduceRectangleSize(Rectangle rectangle)
+    {
+        rectangle.x = rectangle.x + 5;
+        rectangle.y = rectangle.y + 5;
+        rectangle.width = rectangle.width - 10;
+        rectangle.height = rectangle.height - 10;
+
+        return rectangle;
+    }
+
+    public static Point findRandomPointInPoly(Polygon p)
+    {
+        Rectangle rec = p.getBounds();
+        Point point = randomPointFromRectangle(rec);
+
+        while (!rec.contains(new java.awt.Point(point.getX(), point.getY())))
+        {
+            point = randomPointFromRectangle(rec);
+        }
+
+        return point;
+    }
 }

@@ -59,6 +59,8 @@ import net.runelite.api.coords.LocalPoint;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.api.widgets.WidgetItem;
+import net.runelite.client.bot.Bot;
+import net.runelite.client.bot.GameObjectIterpolate;
 import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.overlay.Overlay;
 import net.runelite.client.ui.overlay.OverlayLayer;
@@ -67,6 +69,8 @@ import net.runelite.client.ui.overlay.OverlayPriority;
 import net.runelite.client.ui.overlay.OverlayUtil;
 import net.runelite.client.ui.overlay.tooltip.Tooltip;
 import net.runelite.client.ui.overlay.tooltip.TooltipManager;
+
+import static net.runelite.api.ObjectID.*;
 
 @Singleton
 class DevToolsOverlay extends Overlay
@@ -292,6 +296,8 @@ class DevToolsOverlay extends Overlay
 					{
 						graphics.draw(p);
 					}
+
+					graphics.drawPolygon(GameObjectIterpolate.getBankShape());
 				}
 			}
 		}
@@ -347,6 +353,173 @@ class DevToolsOverlay extends Overlay
 
 	private void renderInventory(Graphics2D graphics)
 	{
+		Widget widget = client.getWidget(WidgetInfo.GRAND_EXCHANGE_WINDOW_CONTAINER);
+		if(widget != null) {
+			Rectangle rectangle = widget.getBounds();
+			graphics.setColor(new Color(255, 255, 255, 65));
+			graphics.fill(rectangle);
+
+			Rectangle topOffersTopHori = new Rectangle();
+			topOffersTopHori.height = 1;
+			topOffersTopHori.width = rectangle.width;
+			topOffersTopHori.x = rectangle.x;
+			topOffersTopHori.y = (int)(rectangle.y + (rectangle.height * .38));
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(topOffersTopHori);
+
+			Rectangle topOffersBottomHori = new Rectangle();
+			topOffersBottomHori.height = 1;
+			topOffersBottomHori.width = rectangle.width;
+			topOffersBottomHori.x = rectangle.x;
+			topOffersBottomHori.y = (int)(rectangle.y + (rectangle.height * .49));
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(topOffersBottomHori);
+
+			Rectangle botOffersTopHori = new Rectangle();
+			botOffersTopHori.height = 1;
+			botOffersTopHori.width = rectangle.width;
+			botOffersTopHori.x = rectangle.x;
+			botOffersTopHori.y = (int)(rectangle.y + (rectangle.height * .74));
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(botOffersTopHori);
+
+			Rectangle botOffersBottomHori = new Rectangle();
+			botOffersBottomHori.height = 1;
+			botOffersBottomHori.width = rectangle.width;
+			botOffersBottomHori.x = rectangle.x;
+			botOffersBottomHori.y = (int)(rectangle.y + (rectangle.height * .85));
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(botOffersBottomHori);
+
+			Rectangle firstColumnLeftBuy = new Rectangle();
+			firstColumnLeftBuy.height = rectangle.height;
+			firstColumnLeftBuy.width = 1;
+			firstColumnLeftBuy.x = (int)(rectangle.x + (rectangle.width * .06));
+			firstColumnLeftBuy.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(firstColumnLeftBuy);
+
+			Rectangle firstColumnRightBuy = new Rectangle();
+			firstColumnRightBuy.height = rectangle.height;
+			firstColumnRightBuy.width = 1;
+			firstColumnRightBuy.x = (int)(rectangle.x + (rectangle.width * .14));
+			firstColumnRightBuy.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(firstColumnRightBuy);
+
+			Rectangle firstColumnLeftSell = new Rectangle();
+			firstColumnLeftSell.height = rectangle.height;
+			firstColumnLeftSell.width = 1;
+			firstColumnLeftSell.x = (int)(rectangle.x + (rectangle.width * .17));
+			firstColumnLeftSell.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(firstColumnLeftSell);
+
+			Rectangle firstColumnRightSell = new Rectangle();
+			firstColumnRightSell.height = rectangle.height;
+			firstColumnRightSell.width = 1;
+			firstColumnRightSell.x = (int)(rectangle.x + (rectangle.width * .25));
+			firstColumnRightSell.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(firstColumnRightSell);
+
+			Rectangle secondColumnLeftBuy = new Rectangle();
+			secondColumnLeftBuy.height = rectangle.height;
+			secondColumnLeftBuy.width = 1;
+			secondColumnLeftBuy.x = (int)(rectangle.x + (rectangle.width * .29));
+			secondColumnLeftBuy.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(secondColumnLeftBuy);
+
+			Rectangle secondColumnRightBuy = new Rectangle();
+			secondColumnRightBuy.height = rectangle.height;
+			secondColumnRightBuy.width = 1;
+			secondColumnRightBuy.x = (int)(rectangle.x + (rectangle.width * .37));
+			secondColumnRightBuy.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(secondColumnRightBuy);
+
+			Rectangle secondColumnLeftSell = new Rectangle();
+			secondColumnLeftSell.height = rectangle.height;
+			secondColumnLeftSell.width = 1;
+			secondColumnLeftSell.x = (int)(rectangle.x + (rectangle.width * .40));
+			secondColumnLeftSell.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(secondColumnLeftSell);
+
+			Rectangle secondColumnRightSell = new Rectangle();
+			secondColumnRightSell.height = rectangle.height;
+			secondColumnRightSell.width = 1;
+			secondColumnRightSell.x = (int)(rectangle.x + (rectangle.width * .48));
+			secondColumnRightSell.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(secondColumnRightSell);
+
+			Rectangle thirdColumnLeftBuy = new Rectangle();
+			thirdColumnLeftBuy.height = rectangle.height;
+			thirdColumnLeftBuy.width = 1;
+			thirdColumnLeftBuy.x = (int)(rectangle.x + (rectangle.width * .52));
+			thirdColumnLeftBuy.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(thirdColumnLeftBuy);
+
+			Rectangle thirdColumnRightBuy = new Rectangle();
+			thirdColumnRightBuy.height = rectangle.height;
+			thirdColumnRightBuy.width = 1;
+			thirdColumnRightBuy.x = (int)(rectangle.x + (rectangle.width * .59));
+			thirdColumnRightBuy.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(thirdColumnRightBuy);
+
+			Rectangle thirdColumnLeftSell = new Rectangle();
+			thirdColumnLeftSell.height = rectangle.height;
+			thirdColumnLeftSell.width = 1;
+			thirdColumnLeftSell.x = (int)(rectangle.x + (rectangle.width * .63));
+			thirdColumnLeftSell.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(thirdColumnLeftSell);
+
+			Rectangle thirdColumnRightSell = new Rectangle();
+			thirdColumnRightSell.height = rectangle.height;
+			thirdColumnRightSell.width = 1;
+			thirdColumnRightSell.x = (int)(rectangle.x + (rectangle.width * .70));
+			thirdColumnRightSell.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(thirdColumnRightSell);
+
+			Rectangle fourthColumnLeftBuy = new Rectangle();
+			fourthColumnLeftBuy.height = rectangle.height;
+			fourthColumnLeftBuy.width = 1;
+			fourthColumnLeftBuy.x = (int)(rectangle.x + (rectangle.width * .75));
+			fourthColumnLeftBuy.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(fourthColumnLeftBuy);
+
+			Rectangle fourthColumnRightBuy = new Rectangle();
+			fourthColumnRightBuy.height = rectangle.height;
+			fourthColumnRightBuy.width = 1;
+			fourthColumnRightBuy.x = (int)(rectangle.x + (rectangle.width * .82));
+			fourthColumnRightBuy.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(fourthColumnRightBuy);
+
+			Rectangle fourthColumnLeftSell = new Rectangle();
+			fourthColumnLeftSell.height = rectangle.height;
+			fourthColumnLeftSell.width = 1;
+			fourthColumnLeftSell.x = (int)(rectangle.x + (rectangle.width * .86));
+			fourthColumnLeftSell.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(fourthColumnLeftSell);
+
+			Rectangle fourthColumnRightSell = new Rectangle();
+			fourthColumnRightSell.height = rectangle.height;
+			fourthColumnRightSell.width = 1;
+			fourthColumnRightSell.x = (int)(rectangle.x + (rectangle.width * .93));
+			fourthColumnRightSell.y = rectangle.y;
+			graphics.setColor(new Color(78, 209, 38, 65));
+			graphics.fill(fourthColumnRightSell);
+		}
+
 		Widget inventoryWidget = client.getWidget(WidgetInfo.INVENTORY);
 		if (inventoryWidget == null || inventoryWidget.isHidden())
 		{
@@ -372,6 +545,8 @@ class DevToolsOverlay extends Overlay
 			graphics.setColor(YELLOW);
 			graphics.drawString(idText, textX, textY);
 		}
+
+
 	}
 
 	private void renderProjectiles(Graphics2D graphics)

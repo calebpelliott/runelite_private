@@ -1,17 +1,39 @@
 package net.runelite.client.bot;
 
+import net.runelite.api.Point;
 import net.runelite.api.widgets.Widget;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.api.widgets.WidgetItem;
+import net.runelite.client.bot.Processor.State;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.Rectangle;
 import java.util.concurrent.ThreadLocalRandom;
 
+
 public class Inventory {
 
-    static public List<WidgetItem> getInventory()
+    public static State useItemOnItemWait(int itemFirst, int itemSecond)
+    {
+        Rectangle rectangle = Inventory.getClientRectangle(itemFirst, 1);
+        rectangle = Randomizer.reduceRectangleSize(rectangle);
+        Point firstItemPoint = Randomizer.randomPointFromRectangle(rectangle);
+
+        Click.clickPointFromCurrent(firstItemPoint);
+
+        rectangle = Inventory.getClientRectangle(itemSecond, 3);
+        rectangle = Randomizer.reduceRectangleSize(rectangle);
+        Point secondItemPoint = Randomizer.randomPointFromRectangle(rectangle);
+
+        Click.clickPointFromCurrent(secondItemPoint);
+
+
+        System.out.println("BEGIN PROCESSING");
+        return State.CONFIRM_POPUP;
+    }
+
+    public static List<WidgetItem> getInventory()
     {
         List<WidgetItem> list = new ArrayList<WidgetItem>();
 
@@ -25,7 +47,12 @@ public class Inventory {
         return list;
     }
 
-    static public List<WidgetItem> getInventoryFromId(int itemId)
+    public static boolean isEmpty()
+    {
+        return getInventory().isEmpty();
+    }
+
+    public static List<WidgetItem> getInventoryFromId(int itemId)
     {
         List<WidgetItem> list = new ArrayList<WidgetItem>();
 
@@ -44,7 +71,7 @@ public class Inventory {
     /*
     Returns client rectangle of item @itemId from first @random number of item occurrences
      */
-    static public Rectangle getClientRectangle(int itemId, int random)
+    public static Rectangle getClientRectangle(int itemId, int random)
     {
         Rectangle rec = new Rectangle();
         List<WidgetItem> items = getInventoryFromId(itemId);
@@ -75,5 +102,21 @@ public class Inventory {
         }
 
         return false;
+    }
+
+    public static void waitUntilItemConsumed(int itemID) {
+        while(Inventory.containsItem(itemID)){
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void clickItem(int itemID) {
+        Rectangle rec = Inventory.getClientRectangle(itemID, 4);
+        rec = Randomizer.reduceRectangleSize(rec);
+        Click.clickPointFromCurrent(Randomizer.randomPointFromRectangle(rec));
     }
 }
