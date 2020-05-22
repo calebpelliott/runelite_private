@@ -1083,13 +1083,16 @@ public class TabInterface
 			incinerator.setOriginalWidth(INCINERATOR_WIDTH);
 			incinerator.setOriginalY(INCINERATOR_HEIGHT);
 
-			Widget child = incinerator.getDynamicChildren()[0];
-			child.setOriginalHeight(INCINERATOR_HEIGHT);
-			child.setOriginalWidth(INCINERATOR_WIDTH);
-			child.setWidthMode(WidgetSizeMode.ABSOLUTE);
-			child.setHeightMode(WidgetSizeMode.ABSOLUTE);
-			child.setType(WidgetType.GRAPHIC);
-			child.setSpriteId(TabSprites.INCINERATOR.getSpriteId());
+			Widget[] children = incinerator.getDynamicChildren();
+			if (children.length > 0) {
+				Widget child = children[0];
+				child.setOriginalHeight(INCINERATOR_HEIGHT);
+				child.setOriginalWidth(INCINERATOR_WIDTH);
+				child.setWidthMode(WidgetSizeMode.ABSOLUTE);
+				child.setHeightMode(WidgetSizeMode.ABSOLUTE);
+				child.setType(WidgetType.GRAPHIC);
+				child.setSpriteId(TabSprites.INCINERATOR.getSpriteId());
+			}
 			incinerator.revalidate();
 
 			bounds.setSize(TAB_WIDTH + MARGIN * 2, height - incinerator.getHeight());

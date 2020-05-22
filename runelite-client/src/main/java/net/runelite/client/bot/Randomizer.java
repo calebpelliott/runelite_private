@@ -21,7 +21,8 @@ public class Randomizer {
 
     public static enum WaitEvent{
         POST_MOUSE_MOVE,
-        SHORT_CLICK
+        SHORT_CLICK,
+        POST_MOUSE_MOVE_LONG
     }
 
     private static Dictionary<WaitEvent, List<Integer>> waitTimes;
@@ -44,6 +45,7 @@ public class Randomizer {
         waitTimes = new Hashtable<WaitEvent, List<Integer>>();
         waitTimes.put(WaitEvent.POST_MOUSE_MOVE, Arrays.asList(new Integer[]{10,20}));
         waitTimes.put(WaitEvent.SHORT_CLICK, Arrays.asList(new Integer[]{60,120}));
+        waitTimes.put(WaitEvent.POST_MOUSE_MOVE_LONG, Arrays.asList(new Integer[]{200,300}));
 
         System.out.println("Initialized wait time dictionary");
     }

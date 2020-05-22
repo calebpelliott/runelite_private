@@ -3,9 +3,9 @@ package net.runelite.client.bot;
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import net.runelite.api.Point;
 
@@ -49,6 +49,18 @@ public class Click{
         leftClickAndRelease();
     }
 
+    public static void clickPointFromCurrent(Point end, Randomizer.WaitEvent event)
+    {
+        java.awt.Point start = MouseInfo.getPointerInfo().getLocation();
+        Point begin = new Point(start.x, start.y);
+
+        end = translateToAbsolutePoint(end);
+        moveMouse(begin, end);
+
+        Randomizer.randomWait(event);
+
+        leftClickAndRelease();
+    }
     private static void leftClickAndRelease()
     {
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
@@ -87,8 +99,44 @@ public class Click{
             e.printStackTrace();
         }
 
+        List<String> list = readFile("/tmp/points.txt");
+
+        startMove(list);
 
         System.out.println("FINISHED MOVING MOUSE");
+    }
+
+    private static void startMove(List<String> list) {
+        for (String st : list)
+        {
+            String[] points = st.split(" ");
+            robot.mouseMove(Integer.parseInt(points[0]), Integer.parseInt(points[1]) );
+            Processor.sleep(2);
+        }
+    }
+
+    public static List<String> readFile(String s) {
+        File file = new File(s);
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String st = "";
+        List<String> stringList = new ArrayList<>();
+
+        while (true) {
+            try {
+                if (!((st = br.readLine()) != null)) break;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stringList.add(st);
+        }
+        return stringList;
     }
 
     public void run(){

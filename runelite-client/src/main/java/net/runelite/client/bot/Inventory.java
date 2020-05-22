@@ -16,7 +16,7 @@ public class Inventory {
 
     public static State useItemOnItemWait(int itemFirst, int itemSecond)
     {
-        Rectangle rectangle = Inventory.getClientRectangle(itemFirst, 1);
+        Rectangle rectangle = Inventory.getClientRectangle(itemFirst, 3);
         rectangle = Randomizer.reduceRectangleSize(rectangle);
         Point firstItemPoint = Randomizer.randomPointFromRectangle(rectangle);
 
@@ -105,7 +105,9 @@ public class Inventory {
     }
 
     public static void waitUntilItemConsumed(int itemID) {
+        System.out.println("Sleeping until " + itemID + " not longer exists");
         while(Inventory.containsItem(itemID)){
+            System.out.println("Item still in inventory");
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {

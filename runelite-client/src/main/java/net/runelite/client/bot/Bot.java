@@ -49,7 +49,7 @@ public class Bot {
         //update scene objects
         updateSelfScene();
 
-        test();
+        //test();
 
         //perform actions based on current scene
         if(triggered == 1 && !active.isLocked())
@@ -62,31 +62,7 @@ public class Bot {
     }
 
     void test(){
-        List<WidgetItem> list = Inventory.getInventory();
-        Widget widget = Bot.client.getWidget(WidgetInfo.BANK_CONTAINER);
-        GameObjectIterpolate.getBankShape();
-        /*Widget widget = Bot.client.getWidget(WidgetInfo.GRAND_EXCHANGE_WINDOW_CONTAINER);
-        Rectangle rectangle = widget.getBounds();
-        Point p = widget.getCanvasLocation();
-        p = Click.translateToAbsolutePoint(p);
-
-        widget = Bot.client.getWidget(WidgetInfo.GRAND_EXCHANGE_INVENTORY_ITEMS_CONTAINER);
-        p = widget.getCanvasLocation();
-        p = Click.translateToAbsolutePoint(p);
-
-        widget = Bot.client.getWidget(WidgetInfo.GRAND_EXCHANGE_OFFER_CONTAINER);
-        p = widget.getCanvasLocation();
-        p = Click.translateToAbsolutePoint(p);
-
-        widget = Bot.client.getWidget(WidgetInfo.GRAND_EXCHANGE_OFFER_TEXT);
-        p = widget.getCanvasLocation();
-        p = Click.translateToAbsolutePoint(p);
-
-        widget = Bot.client.getWidget(WidgetInfo.GRAND_EXCHANGE_OFFER_PRICE);
-        p = widget.getCanvasLocation();
-        p = Click.translateToAbsolutePoint(p);*/
-
-        NPC.getNpcTileRectangle();
+        Click.readFile("C:\\Users\\ellio\\points.txt");
 
     }
 

@@ -130,12 +130,10 @@ def move(mouse_points, draw=False, rand_err=True):
             to a file in /tmp/
     '''
 
-    fname = 'mouse.sh'
+    fname = 'points.txt'
 
     outfile = open(CWD + '/' + fname, 'w')
     os.system('chmod +x ' + CWD + '/' + fname)
-    outfile.write('#!/bin/bash')
-    outfile.write('\n\n')
 
         # round floats to ints
     mouse_points = [[round(v) for v in x] if type(x) is not str else x for x in mouse_points]
@@ -152,7 +150,7 @@ def move(mouse_points, draw=False, rand_err=True):
             else:
                 outfile.write('xdotool click 1 \n')
         else:
-            outfile.write('xdotool mousemove ' + str(coord[0]) + ' ' + str(coord[1]) + '\n')
+            outfile.write(str(coord[0]) + ' ' + str(coord[1]) + '\n')
 
     outfile.close()
     subprocess.call([CWD + '/' + fname])
